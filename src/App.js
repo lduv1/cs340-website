@@ -132,15 +132,15 @@ function Navbar(){
   return (
     <div id="navbar">
       
-        <Link className="logo" to="/">
+        <Link className="logo" to="/~duvoisil/cs340/">
           <h2 >The Sequels PC Building Site</h2>
         </Link>
       
       <div id="navlinkContainer">
-        <NavLink className="navlink" to="/users">Users</NavLink>
-        <NavLink className="navlink" to="/builds">Builds</NavLink>
-        <NavLink className="navlink" to="/parts">Parts</NavLink>
-        <NavLink className="navlink" to="/ratings">Ratings</NavLink>
+        <NavLink className="navlink" to="/~duvoisil/cs340/users">Users</NavLink>
+        <NavLink className="navlink" to="/~duvoisil/cs340/builds">Builds</NavLink>
+        <NavLink className="navlink" to="/~duvoisil/cs340/parts">Parts</NavLink>
+        <NavLink className="navlink" to="/~duvoisil/cs340/ratings">Ratings</NavLink>
       </div>
     </div>
   );
@@ -153,19 +153,19 @@ function App() {
       
       <div id="mainContent">
         <Switch>
-          <Route path="/users">
+          <Route path="/~duvoisil/cs340/users">
             <Users />
           </Route>
-          <Route path="/builds">
+          <Route path="/~duvoisil/cs340/builds">
             <Builds />
           </Route>
-          <Route path="/parts">
+          <Route path="/~duvoisil/cs340/parts">
             <Parts />
           </Route>
-          <Route path="/ratings">
+          <Route path="/~duvoisil/cs340/ratings">
             <Ratings />
           </Route>
-          <Route exact path="/">
+          <Route exact path="/~duvoisil/cs340/">
             <h1>View information about the Sequels PC Building Company by clicking one of the navbar links above</h1>
           </Route>
           <Route path="*">
