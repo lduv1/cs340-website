@@ -1,24 +1,21 @@
-#rootContainer{
-    display: grid;
-    grid-template-rows: min-content 90vh;
-    grid-template-columns: 10rem 1fr;
-}
 #mainContent{
-    grid-row: 2/3;
-    grid-column: 2/3;
-    margin: 2rem;
+
+}
+
+#mainContent > div{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    padding: 2rem;
+    overflow: scroll;
+    max-height: 80vh;
+    
+}
+
+.formContainer{
     overflow: scroll;
 }
-.entry{
-    display: grid;
-    grid-template-columns: 25% 75%;
-}
-.entry-label{
-    display: inline-block;
-    font-weight: 800;
-}
-.entry-value{
-    display: inline-block;
+.tableViewContainer{
+    overflow: scroll;
 }
 
 #navbar{
@@ -37,7 +34,7 @@
 }
 
 .navlink {
-    color: gold;
+    color: lightskyblue;
     margin: auto 2%;
     padding: 5%;
     text-decoration: none;
@@ -51,34 +48,8 @@
     color: rgb(15, 15, 15);
 }
 
-#sidebar{
-    overflow: scroll;
-    background-color: rgb(49, 49, 49);
-}
-#sidebar .sidebarItem{
-    display: block;
-    margin: 0.5rem 0.3rem;
-    padding: 0 0 0 1rem;
-}
-#sidebar .sidebarItemContainer{
-    padding: 0;
-}
-#sidebar .sidebarItem{
-    text-decoration: none;
-    color: gold;
-}
-
-#sidebar .sidebarItem:hover{
-    background-color: rgb(255, 255, 255);
-    color: rgb(15, 15, 15);
-}
-#sidebar .sidebarItem.active{
-    background-color: mintcream;
-    color: rgb(15, 15, 15);
-}
-
 .logo{
-    color: gold;
+    color: lightskyblue;
     margin: auto 1rem;
     text-decoration: none;
 }

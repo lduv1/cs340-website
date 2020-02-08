@@ -3,78 +3,126 @@ import {
   Switch,
   Route,
   Link,
-  NavLink,
-  useParams,
-  useRouteMatch
+  NavLink
 } from 'react-router-dom';
 import './App.css';
-import peopleData from './data/people.json';
-import filmsData from './data/films.json';
-import planetsData from './data/planets.json';
+import { 
+  CreateUserForm,
+  RemoveUserForm, 
+  CreateBuildForm, 
+  RemoveBuildForm,
+  AddPartToBuildForm,
+  RemovePartFromBuildForm,
+  CreatePartForm,
+  RemovePartForm,
+  CreatePartRatingForm,
+  CreateBuildRatingForm,
+  RemoveRatingForm
+} from './Forms.js';
 
-function DataViewer(props) {
+function ViewTable(props) { 
+
   return (
-    <div>
-      {Object.keys(props.data[props.dataId]).map( key => (
-        <div className="entry" key={`entry-${key}`}>
-          <div className="entry-label"> {key} </div>
-          { Array.isArray(props.data[props.dataId][key]) ? (
-            <ul>
-              {props.data[props.dataId][key].map(element =>  (
-                <li className="entry-list-item" key={`li-${element.split('/')[2]}`}>
-                  <Link to={`${element}`} >{element}</Link>
-                </li>
-              ))}
-            </ul>
-          ) : ( typeof props.data[props.dataId][key] == "string" && 
-                props.data[props.dataId][key].split('/').length === 4 ? (
-                  <Link 
-                    className="entry-url" 
-                    to={`${props.data[props.dataId][key]}`} >
-                      {props.data[props.dataId][key]}
-                  </Link>
-            ) : (
-              <div className="entry-value">{props.data[props.dataId][key]}</div>
-            )
-          )}
-        </div>
-      ))}
+    <div className='viewTableContainer'>
+      <h3> Data for {`${props.type}`} goes here</h3>
+    </div>
+  )
+}
+
+function UsersForm(){
+
+  return (
+    <div className="formContainer">
+      <h1>Add a User</h1>
+      <CreateUserForm />
+      <h1>Remove a User</h1>
+      <RemoveUserForm />
     </div>
   );
 }
 
-function Planets() {
-  var { planetId } = useParams();
-  if(!planetId){ planetId = 1;}
-  console.log(planetId);
+function Users() {
+
   return (
     <div>
-      <h1>Planets - {planetsData[planetId].name}</h1>
-      <DataViewer dataId={planetId} data={planetsData}/>
+      <ViewTable type="Users"/>
+      <UsersForm />      
     </div>
   );
 }
 
-function Films() {
-  var { filmId } = useParams();
-  if(!filmId){ filmId = 1;}
-  console.log(filmId);
+function BuildsForm(){
+
   return (
-    <div>
-      <h1>Films - {filmsData[filmId].title}</h1>
-      <DataViewer dataId={filmId} data={filmsData}/>
+    <div className="formContainer">
+      <h1>Create a Build</h1>
+      <CreateBuildForm />
+      <h1>Remove a Build</h1>
+      <RemoveBuildForm />
+      <h1>Add parts to a Build</h1>
+      <AddPartToBuildForm />
+      <h1>Remove parts from a Build</h1>
+      <RemovePartFromBuildForm />
     </div>
   );
 }
 
-function People() {
-  var { personId } = useParams();
-  if(!personId){ personId = 1;}
-  console.log(personId);
+function Builds() {
+
   return (
     <div>
-      <h1>People - {peopleData[personId].name}</h1>
-      <DataViewer dataId={personId} data={peopleData}/>
+      <ViewTable type="Builds"/>
+      <BuildsForm />      
+    </div>
+  );
+}
+
+function PartsForm(){
+
+  return (
+    <div className="formContainer">
+      <h1>Create a Part</h1>
+      <CreatePartForm />
+      <h1>Remove a Part</h1>
+      <RemovePartForm />
+      <h1>Add Parts to a Build</h1>
+      <AddPartToBuildForm />
+      <h1>Remove Parts from a Build</h1>
+      <RemovePartFromBuildForm />
+    </div>
+  );
+}
+
+function Parts() {
+
+  return (
+    <div>
+      <ViewTable type="Parts"/>
+      <PartsForm />      
+    </div>
+  );
+}
+
+function RatingsForm(){
+
+  return (
+    <div className="formContainer">
+      <h1>Rate a Part</h1>
+      <CreatePartRatingForm />
+      <h1>Rate a Build</h1>
+      <CreateBuildRatingForm />
+      <h1>Remove a Rating</h1>
+      <RemoveRatingForm />
+    </div>
+  );
+}
+
+function Ratings() {
+
+  return (
+    <div>
+      <ViewTable type="Ratings"/>
+      <RatingsForm />      
     </div>
   );
 }
@@ -85,51 +133,15 @@ function Navbar(){
     <div id="navbar">
       
         <Link className="logo" to="/">
-          <h2 >A long time ago, in a galaxy far, far away...!!</h2>
+          <h2 >The Sequels PC Building Site</h2>
         </Link>
       
       <div id="navlinkContainer">
-        <NavLink className="navlink" to="/people">People</NavLink>
-        <NavLink className="navlink" to="/planets">Planets</NavLink>
-        <NavLink className="navlink" to="/films">Films</NavLink>
+        <NavLink className="navlink" to="/users">Users</NavLink>
+        <NavLink className="navlink" to="/builds">Builds</NavLink>
+        <NavLink className="navlink" to="/parts">Parts</NavLink>
+        <NavLink className="navlink" to="/ratings">Ratings</NavLink>
       </div>
-    </div>
-  );
-}
-
-function SidebarList(props){
-  const { url } = useRouteMatch();
-  const nameKey = Object.keys(props.data['1'])[0];
-  return (
-    <div className="sidebarItemContainer">
-        {Object.keys(props.data).map( key => (
-            <NavLink 
-              className="sidebarItem" 
-              key={`${key}`} 
-              to={`${url}/${key}`}>
-                {props.data[`${key}`][nameKey]}
-            </NavLink>
-        ))}
-    </div>
-
-    
-  );
-}
-
-function Sidebar(){
-  return (
-    <div id="sidebar">
-      <Switch>
-        <Route path="/people">
-          <SidebarList data={peopleData}/>
-        </Route>
-        <Route path="/planets">
-          <SidebarList k={Object.keys(planetsData['1'])[1]} data={planetsData}/>
-        </Route>
-        <Route path="/films">
-          <SidebarList k={Object.keys(filmsData['1'])[1]} data={filmsData}/>
-        </Route>
-      </Switch>
     </div>
   );
 }
@@ -139,42 +151,25 @@ function App() {
     <div id="rootContainer">
       <Navbar />
       
-      <Switch>
-        <Route path="/people">
-          <Sidebar />
-        </Route>
-        <Route path="/planets">
-          <Sidebar />
-        </Route>
-        <Route path="/films">
-          <Sidebar />
-        </Route>
-      </Switch>
       <div id="mainContent">
         <Switch>
-          <Route path="/people/:personId">
-            <People />
+          <Route path="/users">
+            <Users />
           </Route>
-          <Route path="/planets/:planetId">
-            <Planets />
+          <Route path="/builds">
+            <Builds />
           </Route>
-          <Route path="/films/:filmId">
-            <Films />
+          <Route path="/parts">
+            <Parts />
           </Route>
-          <Route path="/people">
-            <h1>Please select a person from the sidebar</h1>
-          </Route>
-          <Route path="/planets">
-            <h1>Please select a planet from the sidebar</h1>
-          </Route>
-          <Route path="/films">
-            <h1>Please select a film from the sidebar</h1>
+          <Route path="/ratings">
+            <Ratings />
           </Route>
           <Route exact path="/">
-            <h1>View information about Star Wars Films, Planets, and People by clicking one of the navbar links above</h1>
+            <h1>View information about the Sequels PC Building Company by clicking one of the navbar links above</h1>
           </Route>
           <Route path="*">
-            <h1>404 - Impossible, perhaps the archives are incomplete.</h1>
+            <h1>404</h1>
           </Route>
         </Switch>
       </div>
