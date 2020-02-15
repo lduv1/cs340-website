@@ -1,21 +1,38 @@
-#mainContent{
-
-}
-
 #mainContent > div{
-    display: grid;
-    grid-template-columns: 60% 40%;
+    display: flex;
     padding: 2rem;
     overflow: scroll;
     max-height: 80vh;
-    
+
 }
 
 .formContainer{
+    flex-basis: 40%;
+    margin: 1rem;
     overflow: scroll;
 }
-.tableViewContainer{
+.viewTableContainer{
+    flex-basis: 60%;
+    margin: 2rem;
     overflow: scroll;
+}
+.viewTableLabel{
+    display: flex;
+}
+.viewTableTitle{
+    flex-basis: 40%;
+}
+.searchFilter{
+    margin: auto;
+}
+.searchFilter form{
+    display: flex;
+}
+.searchFilter form label input{
+    margin: 0 0.3rem;
+}
+.searchFilter form div{
+    margin: 0 0.3rem;
 }
 
 #navbar{

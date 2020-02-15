@@ -1,5 +1,13 @@
 import React from 'react';
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@material-ui/core';
+import {
   Switch,
   Route,
   Link,
@@ -17,15 +25,49 @@ import {
   RemovePartForm,
   CreatePartRatingForm,
   CreateBuildRatingForm,
+  UpdateBuildRatingForm,
   RemoveRatingForm
 } from './Forms.js';
+import { ratingsData, partsData, buildsData, usersData} from './dummydata.js';
+import { Filter } from './Filter.js';
+
+function View(props){
+
+  return (
+    <div className='viewTableContainer'>
+      <div className='viewTableLabel'>
+        <h3 className='viewTableTitle'>Data for {`${props.type}`}</h3>
+        <Filter data={props.data}/>
+      </div>
+      <ViewTable data={props.data}/>
+    </div>
+
+  )
+}
 
 function ViewTable(props) { 
 
   return (
-    <div className='viewTableContainer'>
-      <h3> Data for {`${props.type}`} goes here</h3>
-    </div>
+    <TableContainer >
+      <Table>
+        <TableHead>
+          <TableRow>
+            {Object.keys(props.data[0]).map(key => (
+                <TableCell key={key}>{key}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          { props.data.map(row => (
+            <TableRow key={row['ID']}>
+              { Object.keys(row).map( rowkey => (
+                <TableCell key={row['ID'] + ' ' + rowkey}> {row[rowkey]} </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 
@@ -45,7 +87,7 @@ function Users() {
 
   return (
     <div>
-      <ViewTable type="Users"/>
+      <View type="Users" data={usersData}/>
       <UsersForm />      
     </div>
   );
@@ -71,7 +113,7 @@ function Builds() {
 
   return (
     <div>
-      <ViewTable type="Builds"/>
+      <View type="Builds" data={buildsData}/>
       <BuildsForm />      
     </div>
   );
@@ -97,7 +139,7 @@ function Parts() {
 
   return (
     <div>
-      <ViewTable type="Parts"/>
+      <View type="Parts" data={partsData}/>
       <PartsForm />      
     </div>
   );
@@ -111,6 +153,8 @@ function RatingsForm(){
       <CreatePartRatingForm />
       <h1>Rate a Build</h1>
       <CreateBuildRatingForm />
+      <h1>Update a rating</h1>
+      <UpdateBuildRatingForm />
       <h1>Remove a Rating</h1>
       <RemoveRatingForm />
     </div>
@@ -121,7 +165,7 @@ function Ratings() {
 
   return (
     <div>
-      <ViewTable type="Ratings"/>
+      <View type="Ratings" data={ratingsData}/>
       <RatingsForm />      
     </div>
   );

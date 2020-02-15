@@ -578,6 +578,72 @@ export class CreateBuildRatingForm extends React.Component {
     }
 }
 
+export class UpdateBuildRatingForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ratingid: "",
+      value: 1,
+      comment: ""
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(event) {
+      console.log('Update Build Rating Form was submited: ' + this.state.partType);
+      event.preventDefault();
+    }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Rating ID:
+          <input
+            name="ratingid"
+            type="text"
+            value={this.state.ratingid}
+            onChange={this.handleInputChange} />
+        </label>
+        <br />
+        <label>
+          Rating:
+          <input
+            name="value"
+            type="number"
+            min="1"
+            max="5"
+            value={this.state.value}
+            onChange={this.handleInputChange} />
+        </label>
+        <br />
+        <label>
+          Comment:
+          <input
+            name="comment"
+            type="text"
+            value={this.state.comment}
+            onChange={this.handleInputChange} />
+        </label>
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+
 export class RemoveRatingForm extends React.Component {
     constructor(props) {
       super(props);
