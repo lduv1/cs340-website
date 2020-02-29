@@ -1,4 +1,5 @@
 import React from 'react';
+import {MySelect} from './Select';
 
 export class Filter extends React.Component {
     constructor(props) {
@@ -29,13 +30,12 @@ export class Filter extends React.Component {
     }
     
     handleSubmit(event) {
-        // console.log(this.props.data[this.state.where]);
-      alert("Searching for " +
-       this.state.search + 
-       " in " + 
-       Object.keys(this.props.data[0])[this.state.where]
-    )
       event.preventDefault();
+
+      const value = this.state.search;
+      const column = this.props.keys[this.state.where];
+      console.log("Searching for " + value + " in " + column);
+      this.props.searchSubmit(`?value=${value}&column=${column}`);
     }
     
     render() {
@@ -52,46 +52,14 @@ export class Filter extends React.Component {
             in:
           </label>
             <MySelect
-              options={Object.keys(this.props.data[0])}
+              options={this.props.keys}
               value={this.state.where}
               onValueChange={this.handleWhereValueChange}
             />
             
-            <button type="submit">Search</button>
+            <button type="submit" >Search</button>
           </form>
         </div>
       );
     }
   }
-
-
-class MySelect extends React.Component {
-    constructor(props) {
-      super(props);
-      // this.state = { value: Object.keys(props.options)[0] };
-      this.handleChange = this.handleChange.bind(this);
-    }
-    
-    handleChange(event) {
-      // this.setState({ value: event.target.value });
-      this.props.onValueChange(event.target.value);
-    }
-    
-    render() {
-      return (
-        <div>
-          <select
-            value={this.props.value}
-            onChange={this.handleChange}
-          >
-            {Object.keys(this.props.options).map(key => (
-              <option key={key} value={key}>
-                {this.props.options[key]}
-              </option>
-            ))}
-          </select>
-        </div>
-      );
-    }
-  }
-  
