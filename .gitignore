@@ -108,4 +108,5 @@ build
 
 login.js
 
-dbcon.js
+server/dbcon.js
+
