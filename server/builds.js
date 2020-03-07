@@ -8,7 +8,7 @@ module.exports = function(){
     function getBuilds(req, res, mysql, context, complete){
 
         let parsedQs = querystring.parse(url.parse(req.url).query);
-        console.log(parsedQs)
+        // console.log(parsedQs)
 
         const value = parsedQs.value;
         const column = parsedQs.column;
@@ -19,11 +19,11 @@ module.exports = function(){
         if (value && column && value.match(letters) && column.match(letters)){
             query += ` WHERE ${column}='${value}'`
         }
-        console.log(query);
+        // console.log(query);
 
         mysql.pool.query(query, function(error, results, fields){
-            console.log(results);
-            console.log(results.length);
+            // console.log(results);
+            // console.log(results.length);
             if(error || results.length == 0){
                 console.log("error results");
                 context.Builds = [{error: "error", reason: "do empty search to clear"}];
@@ -40,8 +40,8 @@ module.exports = function(){
         var query = "SELECT * from Builds_Parts";
 
         mysql.pool.query(query, function(error, results, fields){
-            console.log(results);
-            console.log(results.length);
+            // console.log(results);
+            // console.log(results.length);
             if(error || results.length == 0){
                 console.log("error results");
                 context.BuildsParts = [{error: "error", reason: "do empty search to clear"}];
@@ -107,9 +107,9 @@ module.exports = function(){
         getBuildsParts(req, res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            console.log("complete called")
+            // console.log("complete called")
             if (callbackCount == 2){
-                console.log("returning")
+                // console.log("returning")
                 res.json({
                     results: context.Builds,
                     buildsParts: context.BuildsParts
@@ -175,7 +175,7 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO Builds (buildID, userID) VALUES (NULL,?)";
         var inserts = [req.body.userID];
-        console.log(sql)
+        // console.log(sql)
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
@@ -189,7 +189,7 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO Builds_Parts (buildID, partID) VALUES (?,?)";
         var inserts = [req.body.buildID,req.body.partID];
-        console.log(sql)
+        // console.log(sql)
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
@@ -222,21 +222,36 @@ module.exports = function(){
 
     // /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
 
-    // router.delete('/:id', function(req, res){
-    //     var mysql = req.app.get('mysql');
-    //     var sql = "DELETE FROM bsg_Builds WHERE character_id = ?";
-    //     var inserts = [req.params.id];
-    //     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
-    //         if(error){
-    //             console.log(error)
-    //             res.write(JSON.stringify(error));
-    //             res.status(400);
-    //             res.end();
-    //         }else{
-    //             res.status(202).end();
-    //         }
-    //     })
-    // })
+    router.delete('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM Builds WHERE buildID = ?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
+    })
+    router.delete('/:buildid/:partid', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM Builds_Parts WHERE buildID = ? and partID = ?";
+        var inserts = [req.params.buildid, req.params.partid];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
+    })
 
     return router;
 }();
