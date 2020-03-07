@@ -8,7 +8,7 @@ module.exports = function(){
     function getRatings(req, res, mysql, context, complete){
 
         let parsedQs = querystring.parse(url.parse(req.url).query);
-        console.log(parsedQs)
+        // console.log(parsedQs)
 
         const value = parsedQs.value;
         const column = parsedQs.column;
@@ -19,11 +19,11 @@ module.exports = function(){
         if (value && column && value.match(letters) && column.match(letters)){
             query += ` WHERE ${column}='${value}'`
         }
-        console.log(query);
+        // console.log(query);
 
         mysql.pool.query(query, function(error, results, fields){
-            console.log(results);
-            console.log(results.length);
+            // console.log(results);
+            // console.log(results.length);
             if(error || results.length == 0){
                 console.log("error results");
                 context.Ratings = [{error: "error", reason: "do empty search to clear"}];
@@ -147,8 +147,8 @@ module.exports = function(){
     // /* Adds a person, redirects to the Ratings page after adding */
 
     router.post('/', function(req, res){
-        console.log(req.body.homeworld)
-        console.log(req.body)
+        // console.log(req.body.homeworld)
+        // console.log(req.body)
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO Ratings (ratingID, userID, ratedID, buildOrPart, ratingValue, comment) VALUES (NULL,?,?,?,?,?)";
         var inserts = [req.body.userID, req.body.ratedID, req.body.buildOrPart, req.body.ratingValue, req.body.comment];
@@ -165,41 +165,41 @@ module.exports = function(){
 
     // /* The URI that update data is sent to in order to update a person */
 
-    // router.put('/:id', function(req, res){
-    //     var mysql = req.app.get('mysql');
-    //     console.log(req.body)
-    //     console.log(req.params.id)
-    //     var sql = "UPDATE bsg_Ratings SET fname=?, lname=?, homeworld=?, age=? WHERE character_id=?";
-    //     var inserts = [req.body.fname, req.body.lname, req.body.homeworld, req.body.age, req.params.id];
-    //     sql = mysql.pool.query(sql,inserts,function(error, results, fields){
-    //         if(error){
-    //             console.log(error)
-    //             res.write(JSON.stringify(error));
-    //             res.end();
-    //         }else{
-    //             res.status(200);
-    //             res.end();
-    //         }
-    //     });
-    // });
+    router.put('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        console.log(req.body)
+        console.log(req.params.id)
+        var sql = "UPDATE Ratings SET ratingValue=?, comment=? WHERE ratingID=?";
+        var inserts = [req.body.ratingValue, req.body.comment, req.params.id];
+        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.end();
+            }else{
+                res.status(200);
+                res.end();
+            }
+        });
+    });
 
     // /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
 
-    // router.delete('/:id', function(req, res){
-    //     var mysql = req.app.get('mysql');
-    //     var sql = "DELETE FROM bsg_Ratings WHERE character_id = ?";
-    //     var inserts = [req.params.id];
-    //     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
-    //         if(error){
-    //             console.log(error)
-    //             res.write(JSON.stringify(error));
-    //             res.status(400);
-    //             res.end();
-    //         }else{
-    //             res.status(202).end();
-    //         }
-    //     })
-    // })
+    router.delete('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM Ratings WHERE ratingID = ?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
+    })
 
     return router;
 }();

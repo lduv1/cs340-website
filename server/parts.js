@@ -8,7 +8,7 @@ module.exports = function(){
     function getParts(req, res, mysql, context, complete){
 
         let parsedQs = querystring.parse(url.parse(req.url).query);
-        console.log(parsedQs)
+        // console.log(parsedQs)
 
         const value = parsedQs.value;
         const column = parsedQs.column;
@@ -19,11 +19,11 @@ module.exports = function(){
         if (value && column && value.match(letters) && column.match(letters)){
             query += ` WHERE ${column}='${value}'`
         }
-        console.log(query);
+        // console.log(query);
 
         mysql.pool.query(query, function(error, results, fields){
-            console.log(results);
-            console.log(results.length);
+            // console.log(results);
+            // console.log(results.length);
             if(error || results.length == 0){
                 console.log("error results");
                 context.Parts = [{error: "error", reason: "do empty search to clear"}];
@@ -147,8 +147,8 @@ module.exports = function(){
     // /* Adds a person, redirects to the Parts page after adding */
 
     router.post('/', function(req, res){
-        console.log(req.body.homeworld)
-        console.log(req.body)
+        // console.log(req.body.homeworld)
+        // console.log(req.body)
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO Parts (partID, partType, price, specs) VALUES (NULL,?,?,?)";
         var inserts = [req.body.partType, req.body.price, req.body.specs];
@@ -185,21 +185,21 @@ module.exports = function(){
 
     // /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
 
-    // router.delete('/:id', function(req, res){
-    //     var mysql = req.app.get('mysql');
-    //     var sql = "DELETE FROM bsg_Parts WHERE character_id = ?";
-    //     var inserts = [req.params.id];
-    //     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
-    //         if(error){
-    //             console.log(error)
-    //             res.write(JSON.stringify(error));
-    //             res.status(400);
-    //             res.end();
-    //         }else{
-    //             res.status(202).end();
-    //         }
-    //     })
-    // })
+    router.delete('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM Parts WHERE partID = ?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
+    })
 
     return router;
 }();
