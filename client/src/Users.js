@@ -63,7 +63,7 @@ export function Users() {
 
   return (
     <div>
-      <View type="Users" keys={usersKeys} data={tableData} searchSubmit={setInputQuery}/>
+      <View type="Users" keys={usersKeys} searchkeys={usersKeys} data={tableData} searchSubmit={setInputQuery}/>
       <UsersForm updateCount={setRefreshCount} refreshCount={refreshCount}/>      
     </div>
   );

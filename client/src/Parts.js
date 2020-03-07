@@ -67,7 +67,7 @@ export function Parts() {
   }, [ refreshCount, inputQuery ]);
   return (
     <div>
-      <View type="Parts" keys={partsKeys} data={tableData} searchSubmit={setInputQuery}/>
+      <View type="Parts" keys={partsKeys} searchkeys={partsKeys} data={tableData} searchSubmit={setInputQuery}/>
       <PartsForm updateCount={setRefreshCount} refreshCount={refreshCount}/>      
     </div>
   );

@@ -4,7 +4,7 @@ import './App.css';
 import { 
   CreatePartRatingForm,
   CreateBuildRatingForm,
-  UpdateBuildRatingForm,
+  UpdateRatingForm,
   RemoveRatingForm
 } from './Forms.js';
 import {apiUrl} from './App';
@@ -21,7 +21,7 @@ function RatingsForm(props){
       <h1>Rate a Build</h1>
       <CreateBuildRatingForm {...props}/>
       <h1>Update a rating</h1>
-      <UpdateBuildRatingForm {...props}/>
+      <UpdateRatingForm {...props}/>
       <h1>Remove a Rating</h1>
       <RemoveRatingForm {...props}/>
     </div>
@@ -67,7 +67,7 @@ export function Ratings() {
   }, [ refreshCount, inputQuery ]);
   return (
     <div>
-      <View type="Ratings" keys={ratingsKeys} data={tableData} searchSubmit={setInputQuery}/>
+      <View type="Ratings" keys={ratingsKeys} searchkeys={ratingsKeys} data={tableData} searchSubmit={setInputQuery}/>
       <RatingsForm updateCount={setRefreshCount} refreshCount={refreshCount}/>      
     </div>
   );

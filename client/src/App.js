@@ -11,7 +11,7 @@ import { Ratings } from './Ratings.js';
 import { Users } from './Users.js';
 import { Builds } from './Builds.js';
 
-export const apiUrl = 'http://flip1.engr.oregonstate.edu:55556/'
+export const apiUrl = 'http://flip1.engr.oregonstate.edu:55557/'
 
 function Navbar(){
 

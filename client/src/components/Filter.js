@@ -33,7 +33,7 @@ export class Filter extends React.Component {
       event.preventDefault();
 
       const value = this.state.search;
-      const column = this.props.keys[this.state.where];
+      const column = this.props.searchkeys[this.state.where];
       console.log("Searching for " + value + " in " + column);
       this.props.searchSubmit(`?value=${value}&column=${column}`);
     }
@@ -52,7 +52,7 @@ export class Filter extends React.Component {
             in:
           </label>
             <MySelect
-              options={this.props.keys}
+              options={this.props.searchkeys}
               value={this.state.where}
               onValueChange={this.handleWhereValueChange}
             />

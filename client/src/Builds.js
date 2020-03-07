@@ -11,6 +11,7 @@ import {apiUrl} from './App';
 import { View } from './View.js';
 
 const buildsKeys = ['buildID', 'userID', 'parts'];
+const buildsSearchKeys = ['buildID', 'userID'];
 
 function BuildsForm(props){
 
@@ -80,7 +81,7 @@ export function Builds() {
   }, [ refreshCount, inputQuery ]);
   return (
     <div>
-      <View type="Builds" keys={buildsKeys} data={tableData} searchSubmit={setInputQuery}/>
+      <View type="Builds" keys={buildsKeys} searchkeys={buildsSearchKeys} data={tableData} searchSubmit={setInputQuery}/>
       <BuildsForm updateCount={setRefreshCount} refreshCount={refreshCount}/>      
     </div>
   );
