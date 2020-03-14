@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && rsync -avz build/ flip.engr.oregonstate.edu:public_html/cs340/"
+    "deploy": "npm run build && rsync -avz build/ duvoisil@flip.engr.oregonstate.edu:public_html/cs340/"
 
   },
   "eslintConfig": {

@@ -1,0 +1,2 @@
+RewriteRule ^ /~duvoisil/cs340/index.html [QSA,L]
+
